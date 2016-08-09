@@ -1,7 +1,13 @@
 Rails.application.routes.draw do
   root to: 'visitors#index'
   ActiveAdmin.routes(self)
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" }
+  get 'products/:id', to: 'products#show', :as => :products
+  devise_scope :user do
+    post 'pay', to: 'registrations#pay'
+  end
+  resources :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
